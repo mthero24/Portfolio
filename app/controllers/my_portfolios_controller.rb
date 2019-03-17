@@ -18,7 +18,7 @@ class MyPortfoliosController < ApplicationController
     
         respond_to do |format|
           if @portfolio.save
-            format.html { redirect_to @portfolio, notice: 'Portfoilio was successfully created.' }
+            format.html { redirect_to my_portfolios_path, notice: 'Portfoilio was successfully created.' }
             format.json { render :my_portfolios, status: :created, location: @portfolio }
           else
             format.html { render :new }
