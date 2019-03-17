@@ -29,7 +29,7 @@ class MyPortfoliosController < ApplicationController
         respond_to do |format|
           if @portfolio.update(params.require(:my_portfolio).permit(:title, :subtitle, :body))
             format.html { redirect_to :my_portfolios, notice: 'portfolio was successfully updated.' }
-            format.json { render :my_portfolios, status: :ok, location: @blog }
+            
           else
             format.html { render :edit }
             
@@ -39,5 +39,16 @@ class MyPortfoliosController < ApplicationController
     
     def show
         @portfolio = MyPortfolio.find(params[:id])
+    end
+    
+    def destroy
+        # perform look up
+        @portfolio = MyPortfolio.find(params[:id])
+        #delets record
+        @portfolio.destroy
+        #redirects to portfolios page
+        respond_to do |format|
+            format.html { redirect_to my_portfolios_url, notice: 'Record was removed.' }
+        end
     end
 end
