@@ -3,16 +3,24 @@ class MyPortfoliosController < ApplicationController
         @portfolio = MyPortfolio.all
     end
 
+    def angular
+      @portfolio = MyPortfolio.angular
+    end
+    def ruby_on_rails
+      @portfolio = MyPortfolio.ruby_on_rails_portfolio_items
+    end
     def new
-        @portfolio = MyPortfolio.new    
+      @portfolio = MyPortfolio.new
+      3.times { @portfolio.technologies.build}    
     end
 
     def create
-        @portfolio = MyPortfolio.new(params.require(:my_portfolio).permit(:title, :subtitle, :body))
+        @portfolio = MyPortfolio.new(params.require(:my_portfolio).permit(:title, :subtitle, :body, 
+          technologies_attributes: [:name]))
     
         respond_to do |format|
           if @portfolio.save
-            format.html { redirect_to @portfolio, notice: 'Portfoilio was successfully created.' }
+            format.html { redirect_to my_portfolios_path, notice: 'Portfoilio was successfully created.' }
             format.json { render :my_portfolios, status: :created, location: @portfolio }
           else
             format.html { render :new }
